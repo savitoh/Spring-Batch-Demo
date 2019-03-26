@@ -1,6 +1,6 @@
 # Spring Batch Demo
 
-Projeto desenvolvido para demonstrar as funcionalidades básicas do framework Spring Batch.
+Projeto desenvolvido para demonstrar funcionalidades básicas do framework Spring Batch.
 
 ## Tecnologias Necessárias
 
@@ -12,7 +12,7 @@ Abaixo segue a lista de tecnologias nescessárias para rodar o projeto.
 
 Caso tenha dúvida de como instalar, recomendo procurar pelo tutorial especifico de cada tecnologia no repositório: [Como instalar XYZ].
 
-##Rodando o projeto
+## Rodando o projeto
 
 Instruções para subir o projeto localmente.
 
