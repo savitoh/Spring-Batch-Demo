@@ -1,6 +1,12 @@
 # Spring Batch Demo
 
-Projeto desenvolvido para demonstrar funcionalidades básicas do framework Spring Batch.
+Projeto desenvolvido para demonstrar funcionalidades básicas do framework Spring Batch. Utilizando a stack abaixo:
+
+- Java 11
+- Spring Boot v2.0.5.RELEASE
+- Spring Batch 
+- JDBC Template
+- PostgreSQL
 
 ## Tecnologias Necessárias
 
