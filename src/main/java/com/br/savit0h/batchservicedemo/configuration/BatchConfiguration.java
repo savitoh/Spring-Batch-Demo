@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.sql.DataSource;
+
 
 @Configuration
 @EnableBatchProcessing
@@ -31,7 +31,7 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
     private StepBuilderFactory stepBuilderFactory;
 
     @Autowired
-    private DataSource dataSource;
+    private CustomReader customReader;
 
     @Autowired
     private CustomWriter customWriter;
@@ -50,7 +50,7 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .<User, User> chunk(10)
-                .reader(new CustomReader(dataSource).readerUsers())
+                .reader(customReader.readerUsers())
                 .processor(new UserItemProcessor())
                 .writer(customWriter)
                 .build();

@@ -5,6 +5,7 @@ import com.br.savit0h.batchservicedemo.web.ExternalApiIntegration;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -31,6 +32,7 @@ public class CustomWriter implements ItemWriter<User>{
     }
 
     @Override
+    @Transactional
     public void write(List<? extends User> items) throws Exception {
 
         items.forEach(i -> {
