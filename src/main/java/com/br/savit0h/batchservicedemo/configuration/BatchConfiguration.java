@@ -5,6 +5,7 @@ import com.br.savit0h.batchservicedemo.listener.JobCompletionNotificationListene
 import com.br.savit0h.batchservicedemo.processor.UserItemProcessor;
 import com.br.savit0h.batchservicedemo.reader.CustomReader;
 import com.br.savit0h.batchservicedemo.writer.CustomWriter;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -32,6 +33,10 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
     @Autowired
     private DataSource dataSource;
 
+    @Autowired
+    private CustomWriter customWriter;
+
+
     @Bean
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
         return jobBuilderFactory.get("import-user-job")
@@ -47,7 +52,7 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
                 .<User, User> chunk(10)
                 .reader(new CustomReader(dataSource).readerUsers())
                 .processor(new UserItemProcessor())
-                .writer(new CustomWriter(dataSource))
+                .writer(customWriter)
                 .build();
     }
 
