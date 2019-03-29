@@ -4,5 +4,5 @@ CREATE TABLE user  (
     user_id BIGINT IDENTITY NOT NULL PRIMARY KEY,
     name VARCHAR(50),
     job VARCHAR(50),
-    createdAt TIMESTAMP
+    created_at TIMESTAMP
 );
