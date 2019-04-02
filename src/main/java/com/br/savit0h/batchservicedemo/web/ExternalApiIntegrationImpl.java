@@ -23,7 +23,6 @@ public class ExternalApiIntegrationImpl implements  ExternalApiIntegration<User>
         this.restTemplate = restTemplateBuilder.build();
     }
 
-
     @Override
     public ResponseEntity<User> sendObjectForApi(User object) {
         final var headers = factoryHeaders.createHeaderWithoutAuth();

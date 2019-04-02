@@ -18,9 +18,9 @@ public class CustomReader{
             "SELECT " +
                     "name, " +
                     "job " +
-            "FROM user";
-
-
+            "FROM " +
+                    "user " +
+            "WHERE created_at = NULL";
 
     @Autowired
     public CustomReader(DataSource dataSource){

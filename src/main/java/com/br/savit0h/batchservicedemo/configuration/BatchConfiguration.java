@@ -8,7 +8,6 @@ import com.br.savit0h.batchservicedemo.writer.CustomWriter;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
@@ -20,7 +19,6 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 
 
 @Configuration
-@EnableBatchProcessing
 public class BatchConfiguration extends JobExecutionListenerSupport {
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -45,6 +43,7 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
         return jobBuilderFactory.get("import-user-job")
                 .incrementer(new RunIdIncrementer())
+                .listener(listener)
                 .flow(step1)
                 .end()
                 .build();
