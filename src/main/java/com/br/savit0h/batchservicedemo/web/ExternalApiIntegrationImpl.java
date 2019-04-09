@@ -2,6 +2,7 @@ package com.br.savit0h.batchservicedemo.web;
 
 import com.br.savit0h.batchservicedemo.dto.User;
 
+import com.br.savit0h.batchservicedemo.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -24,11 +25,12 @@ public class ExternalApiIntegrationImpl implements  ExternalApiIntegration<User>
     }
 
     @Override
-    public ResponseEntity<User> sendObjectForApi(User object) {
+    public ResponseEntity<UserResponse> sendObjectForApi(User object) {
         final var headers = factoryHeaders.createHeaderWithoutAuth();
         final var request = new HttpEntity<>(object, headers);
 
-        final var response = restTemplate.exchange(URL_API_EXTERNAL, HttpMethod.POST, request, User.class);
+        final var response = restTemplate.exchange(URL_API_EXTERNAL, HttpMethod.POST,
+                                                    request, UserResponse.class);
 
         return response;
     }

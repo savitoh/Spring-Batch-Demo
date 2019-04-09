@@ -17,27 +17,29 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 
+import javax.sql.DataSource;
+
 
 @Configuration
 public class BatchConfiguration extends JobExecutionListenerSupport {
+
 
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    private final CustomReader customReader;
+    private final DataSource dataSource;
 
-    private final CustomWriter customWriter;
+    private final UserItemProcessor userItemProcessor;
 
     @Autowired
     public BatchConfiguration(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-                              CustomReader customReader, CustomWriter customWriter) {
+                              DataSource dataSource, UserItemProcessor userItemProcessor) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.customReader = customReader;
-        this.customWriter = customWriter;
+        this.dataSource = dataSource;
+        this.userItemProcessor = userItemProcessor;
     }
-
 
     @Bean
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
@@ -53,9 +55,9 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
     public Step step1() {
         return stepBuilderFactory.get("step1")
                 .<User, User> chunk(10)
-                .reader(customReader.readerUsers())
-                .processor(new UserItemProcessor())
-                .writer(customWriter)
+                .reader(new CustomReader(this.dataSource).readerUsers())
+                .processor(userItemProcessor)
+                .writer(new CustomWriter(this.dataSource))
                 .build();
     }
 

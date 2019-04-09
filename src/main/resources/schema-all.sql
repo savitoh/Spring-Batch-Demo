@@ -1,8 +1,9 @@
-DROP TABLE user IF EXISTS;
+DROP TABLE IF EXISTS user;
 
-CREATE TABLE user  (
-    user_id BIGINT IDENTITY NOT NULL PRIMARY KEY,
+CREATE TABLE user (
+    user_id INT NOT NULL,
     name VARCHAR(50),
+    send_at DATETIME DEFAULT NULL,
     job VARCHAR(50),
-    created_at TIMESTAMP DEFAULT NULL
+    PRIMARY KEY (user_id)
 );

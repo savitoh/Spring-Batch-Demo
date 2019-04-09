@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 public interface ExternalApiIntegration<T extends  Serializable> {
 
-    ResponseEntity<T> sendObjectForApi(T object);
+    ResponseEntity<? extends Serializable> sendObjectForApi(T object);
 
 }

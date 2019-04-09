@@ -13,44 +13,40 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 @Component
 public class CustomWriter implements ItemWriter<User>{
 
-    private final ExternalApiIntegration externalApiIntegration;
-
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private final DataSource dataSource;
 
     private static final String QUERY_UPDATE_USERS =
             "UPDATE " +
                     "user " +
             "SET " +
-                    "created_at = :createdAt " +
+                    "send_at = :send_at " +
             "WHERE " +
-                    "user_id = :userId";
+                    "user_id = :user_id";
 
-    @Autowired
-    public CustomWriter(ExternalApiIntegration externalApiIntegration,
-                        NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.externalApiIntegration = externalApiIntegration;
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    public CustomWriter(DataSource dataSource) {
+        this.dataSource = dataSource;
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
     @Transactional
     public void write(List<? extends User> items) throws Exception {
-        items.forEach(i -> {
-            final var response = this.externalApiIntegration.sendObjectForApi(i);
-            if(response.getStatusCodeValue() == 201) {
-                final var user = (User) response.getBody();
-                final SqlParameterSource namedParameters = buildMapSqlParameterSource(user);
-                this.namedParameterJdbcTemplate.update(QUERY_UPDATE_USERS, namedParameters);
-            }
+        items.forEach(user -> {
+            final SqlParameterSource namedParameters = buildMapSqlParameterSource(user);
+            this.namedParameterJdbcTemplate.update(QUERY_UPDATE_USERS, namedParameters);
         });
     }
 
     private MapSqlParameterSource buildMapSqlParameterSource(User user) {
         return new MapSqlParameterSource()
-                    .addValue("createdAt", user.getCreatedAt())
-                    .addValue("userId", user.getId());
+                    .addValue("send_at", user.getCreatedAt())
+                    .addValue("user_id", user.getId());
     }
 }

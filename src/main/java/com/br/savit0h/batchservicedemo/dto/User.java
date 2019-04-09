@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +20,6 @@ public class User implements Serializable {
 
     private String job;
 
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
 }

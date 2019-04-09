@@ -16,13 +16,13 @@ public class CustomReader{
 
     private static final String QUERY_FIND_BY_USERS =
             "SELECT " +
+                    "user_id,"  +
                     "name, " +
                     "job " +
             "FROM " +
                     "user " +
-            "WHERE created_at = NULL";
+            "WHERE send_at is NULL";
 
-    @Autowired
     public CustomReader(DataSource dataSource){
         this.dataSource = dataSource;
     }
