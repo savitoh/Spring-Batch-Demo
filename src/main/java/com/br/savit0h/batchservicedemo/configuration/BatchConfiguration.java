@@ -23,7 +23,6 @@ import javax.sql.DataSource;
 @Configuration
 public class BatchConfiguration extends JobExecutionListenerSupport {
 
-
     private final JobBuilderFactory jobBuilderFactory;
 
     private final StepBuilderFactory stepBuilderFactory;
@@ -32,6 +31,8 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
 
     private final UserItemProcessor userItemProcessor;
 
+    private CustomReader customReader;
+
     @Autowired
     public BatchConfiguration(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                               DataSource dataSource, UserItemProcessor userItemProcessor) {
@@ -39,6 +40,11 @@ public class BatchConfiguration extends JobExecutionListenerSupport {
         this.stepBuilderFactory = stepBuilderFactory;
         this.dataSource = dataSource;
         this.userItemProcessor = userItemProcessor;
+    }
+
+    @Autowired
+    public void setCustomReader(CustomReader customReader) {
+        this.customReader = customReader;
     }
 
     @Bean

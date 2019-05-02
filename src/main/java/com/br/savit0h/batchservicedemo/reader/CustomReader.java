@@ -23,6 +23,7 @@ public class CustomReader{
                     "user " +
             "WHERE send_at is NULL";
 
+    @Autowired
     public CustomReader(DataSource dataSource){
         this.dataSource = dataSource;
     }

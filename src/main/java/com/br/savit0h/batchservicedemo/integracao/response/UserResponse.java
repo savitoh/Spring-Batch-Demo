@@ -1,4 +1,4 @@
-package com.br.savit0h.batchservicedemo.dto;
+package com.br.savit0h.batchservicedemo.integracao.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
